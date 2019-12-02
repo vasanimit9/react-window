@@ -308,7 +308,6 @@ export default function createListComponent({
         width,
         isSwipeDisabled,
       } = this.props;
-      console.log("=================================",isSwipeDisabled);
       const { isScrolling } = this.state;
 
       // TODO Deprecate direction "horizontal"
