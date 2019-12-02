@@ -78,6 +78,7 @@ export type Props<T> = {|
   style?: Object,
   useIsScrolling: boolean,
   width: number | string,
+  isSwipeDisabled?: boolean,
 |};
 
 type State = {|
