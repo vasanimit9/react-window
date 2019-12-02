@@ -305,6 +305,7 @@ export default function createListComponent({
         style,
         useIsScrolling,
         width,
+        isSwipeDisabled,
       } = this.props;
       const { isScrolling } = this.state;
 
@@ -350,7 +351,7 @@ export default function createListComponent({
             position: 'relative',
             height,
             width,
-            overflow: 'auto',
+            overflow: !isSwipeDisabled ? 'auto' : 'hidden',
             WebkitOverflowScrolling: 'touch',
             willChange: 'transform',
             direction,
