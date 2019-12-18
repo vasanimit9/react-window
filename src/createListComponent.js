@@ -308,6 +308,7 @@ export default function createListComponent({
         useIsScrolling,
         width,
         isSwipeDisabled,
+        disableScrollBar
       } = this.props;
       const { isScrolling } = this.state;
 
