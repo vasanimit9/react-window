@@ -355,6 +355,7 @@ export default function createListComponent({
             width,
             overflow: 'auto',
             overflowX: !isSwipeDisabled ? 'auto' : 'hidden',
+            backgroundColor: 'red',
             WebkitOverflowScrolling: 'touch',
             '&::-webkit-scrollbar': {
               display: 'none',
