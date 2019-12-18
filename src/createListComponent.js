@@ -79,6 +79,7 @@ export type Props<T> = {|
   useIsScrolling: boolean,
   width: number | string,
   isSwipeDisabled?: boolean,
+  disableScrollBar?: boolean,
 |};
 
 type State = {|
@@ -342,11 +343,11 @@ export default function createListComponent({
         this._instanceProps
       );
 
+      const temporaryClassNames = disableScrollBar ? 'disableScrollBar' : '';
       return createElement(
         outerElementType || outerTagName || 'div',
         {
-          className: `${className} SwiperTest`,
-          id: 'SwiperTest',
+          className: className ? `${className} ${temporaryClassNames}` : temporaryClassNames,
           onScroll,
           ref: this._outerRefSetter,
           style: {
@@ -355,16 +356,7 @@ export default function createListComponent({
             width,
             overflow: 'auto',
             overflowX: !isSwipeDisabled ? 'auto' : 'hidden',
-            backgroundColor: 'red',
             WebkitOverflowScrolling: 'touch',
-            '&::-webkit-scrollbar': {
-              display: 'none',
-              width: '0px',
-              backgroundColor: '#aaa',
-            },
-            '&::-webkit-scrollbar-thumb': {
-                  background: '#000',
-              },
             willChange: 'transform',
             direction,
             ...style,
