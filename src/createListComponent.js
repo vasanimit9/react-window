@@ -345,7 +345,8 @@ export default function createListComponent({
       return createElement(
         outerElementType || outerTagName || 'div',
         {
-          className,
+          className: `${className} SwiperTest`,
+          id: 'SwiperTest',
           onScroll,
           ref: this._outerRefSetter,
           style: {
@@ -357,7 +358,12 @@ export default function createListComponent({
             WebkitOverflowScrolling: 'touch',
             '&::-webkit-scrollbar': {
               display: 'none',
+              width: '0px',
+              backgroundColor: '#aaa',
             },
+            '&::-webkit-scrollbar-thumb': {
+                  background: '#000',
+              },
             willChange: 'transform',
             direction,
             ...style,
