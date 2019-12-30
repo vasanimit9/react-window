@@ -275,6 +275,26 @@ export default function createGridComponent({
       }, this._resetIsScrollingDebounced);
     }
 
+    // Added By Keshav :: Copied Private function and created duplicate to get rendered items
+    getRenderedItemRange(): {
+      columnStartIndex: number,
+      columnStopIndex: number,
+      rowStartIndex: number,
+      rowStopIndex: number,
+    } {
+      const [
+        columnStartIndex,
+        columnStopIndex,
+      ] = this._getHorizontalRangeToRender();
+      const [rowStartIndex, rowStopIndex] = this._getVerticalRangeToRender();
+      return {
+        columnStartIndex,
+        columnStopIndex,
+        rowStartIndex,
+        rowStopIndex,
+      };
+    }
+
     scrollToItem({
       align = 'auto',
       columnIndex,

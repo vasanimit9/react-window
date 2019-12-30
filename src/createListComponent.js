@@ -231,6 +231,46 @@ export default function createListComponent({
       );
     }
 
+    // Added By Keshav :: Copied Private function and created duplicate to get rendered items
+    getRenderedItemRange(): [number, number, number, number] {
+      const { itemCount, overscanCount } = this.props;
+      const { isScrolling, scrollDirection, scrollOffset } = this.state;
+
+      if (itemCount === 0) {
+        return [0, 0, 0, 0];
+      }
+
+      const startIndex = getStartIndexForOffset(
+        this.props,
+        scrollOffset,
+        this._instanceProps
+      );
+      const stopIndex = getStopIndexForStartIndex(
+        this.props,
+        startIndex,
+        scrollOffset,
+        this._instanceProps
+      );
+
+      // Overscan by one item in each direction so that tab/focus works.
+      // If there isn't at least one extra item, tab loops back around.
+      const overscanBackward =
+        !isScrolling || scrollDirection === 'backward'
+          ? Math.max(1, overscanCount)
+          : 1;
+      const overscanForward =
+        !isScrolling || scrollDirection === 'forward'
+          ? Math.max(1, overscanCount)
+          : 1;
+
+      return [
+        Math.max(0, startIndex - overscanBackward),
+        Math.max(0, Math.min(itemCount - 1, stopIndex + overscanForward)),
+        startIndex,
+        stopIndex,
+      ];
+    }
+
     componentDidMount() {
       const { direction, initialScrollOffset, layout } = this.props;
 
@@ -307,6 +347,8 @@ export default function createListComponent({
         style,
         useIsScrolling,
         width,
+        // Changed By Keshav  :: isSwipeDisabled to disable swipe in list
+        // Changed By Keshav ::  disableScrollBar to hide scrollbar in list
         isSwipeDisabled,
         disableScrollBar,
       } = this.props;
@@ -344,11 +386,15 @@ export default function createListComponent({
         this._instanceProps
       );
 
+      // Changed By Keshav ::  disableScrollBar to hide scrollbar in list
       const temporaryClassNames = disableScrollBar ? 'disableScrollBar' : '';
       return createElement(
         outerElementType || outerTagName || 'div',
         {
-          className: className ? `${className} ${temporaryClassNames}` : temporaryClassNames,
+          // Changed By Keshav ::  disableScrollBar to hide scrollbar in list
+          className: className
+            ? `${className} ${temporaryClassNames}`
+            : temporaryClassNames,
           onScroll,
           ref: this._outerRefSetter,
           style: {
@@ -356,6 +402,7 @@ export default function createListComponent({
             height,
             width,
             overflow: 'auto',
+            // Changed By Keshav  :: isSwipeDisabled to disable swipe in list
             overflowX: !isSwipeDisabled ? 'auto' : 'hidden',
             WebkitOverflowScrolling: 'touch',
             willChange: 'transform',
