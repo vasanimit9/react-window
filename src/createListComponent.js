@@ -232,45 +232,9 @@ export default function createListComponent({
     }
 
     // Added By Keshav :: Copied Private function and created duplicate to get rendered items
-    getRenderedItemRange(): [number, number, number, number] {
-      const { itemCount, overscanCount } = this.props;
-      const { isScrolling, scrollDirection, scrollOffset } = this.state;
-
-      if (itemCount === 0) {
-        return [0, 0, 0, 0];
-      }
-
-      const startIndex = getStartIndexForOffset(
-        this.props,
-        scrollOffset,
-        this._instanceProps
-      );
-      const stopIndex = getStopIndexForStartIndex(
-        this.props,
-        startIndex,
-        scrollOffset,
-        this._instanceProps
-      );
-
-      // Overscan by one item in each direction so that tab/focus works.
-      // If there isn't at least one extra item, tab loops back around.
-      const overscanBackward =
-        !isScrolling || scrollDirection === 'backward'
-          ? Math.max(1, overscanCount)
-          : 1;
-      const overscanForward =
-        !isScrolling || scrollDirection === 'forward'
-          ? Math.max(1, overscanCount)
-          : 1;
-
-      return [
-        Math.max(0, startIndex - overscanBackward),
-        Math.max(0, Math.min(itemCount - 1, stopIndex + overscanForward)),
-        startIndex,
-        stopIndex,
-      ];
+    getRenderedItemRange(){
+      return this._getRangeToRender();
     }
-
     componentDidMount() {
       const { direction, initialScrollOffset, layout } = this.props;
 
