@@ -232,7 +232,7 @@ export default function createListComponent({
     }
 
     // Added By Keshav :: Copied Private function and created duplicate to get rendered items
-    getRenderedItemRange(){
+    getRenderedItemRange() {
       return this._getRangeToRender();
     }
     componentDidMount() {
@@ -525,12 +525,12 @@ export default function createListComponent({
       // If there isn't at least one extra item, tab loops back around.
       const overscanBackward =
         !isScrolling || scrollDirection === 'backward'
-          ? Math.max(1, overscanCount)
-          : 1;
+          ? Math.max(0, overscanCount)
+          : 0;
       const overscanForward =
         !isScrolling || scrollDirection === 'forward'
-          ? Math.max(1, overscanCount)
-          : 1;
+          ? Math.max(0, overscanCount)
+          : 0;
 
       return [
         Math.max(0, startIndex - overscanBackward),
